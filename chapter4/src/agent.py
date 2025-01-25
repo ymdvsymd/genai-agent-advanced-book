@@ -1,7 +1,6 @@
 import operator
 from typing import Annotated, Literal, Sequence, TypedDict
 
-from langchain_core.tools.structured import StructuredTool
 from langchain_core.utils.function_calling import convert_to_openai_tool
 from langgraph.constants import Send
 from langgraph.graph import END, START, StateGraph
@@ -51,7 +50,7 @@ class HelpDeskAgent:
     def __init__(
         self,
         settings: Settings,
-        tools: list[StructuredTool] = [],
+        tools: list = [],
         prompts: HelpDeskAgentPrompts = HelpDeskAgentPrompts(),
     ) -> None:
         self.settings = settings
