@@ -7,8 +7,17 @@ from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from openai import OpenAI
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
+
+
+class Settings(BaseSettings):
+    openai_api_key: str
+    openai_api_base: str
+    openai_model: str
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
 def load_pdf_docs(data_dir_path: str) -> list[Document]:
@@ -133,10 +142,13 @@ def add_documents_to_es(
 
 
 def add_documents_to_qdrant(
-    qdrant_client: QdrantClient, index_name: str, docs: list[Document]
+    qdrant_client: QdrantClient,
+    index_name: str,
+    docs: list[Document],
+    settings: Settings,
 ) -> None:
     points = []
-    client = OpenAI()
+    client = OpenAI(api_key=settings.openai_api_key)
 
     for i, doc in enumerate(docs):
         content = doc.page_content
@@ -166,6 +178,8 @@ if __name__ == "__main__":
     es = Elasticsearch("http://localhost:9200")
     qdrant_client = QdrantClient("http://localhost:6333")
 
+    settings = Settings()
+
     index_name = "documents"
     print(f"Creating index for keyword search {index_name}")
     create_keyword_search_index(es, index_name)
@@ -188,6 +202,6 @@ if __name__ == "__main__":
     print("--------------------------------")
 
     print("Adding documents to vector search index")
-    add_documents_to_qdrant(qdrant_client, index_name, qa_docs)
+    add_documents_to_qdrant(qdrant_client, index_name, qa_docs, settings)
     print("--------------------------------")
     print("Done")

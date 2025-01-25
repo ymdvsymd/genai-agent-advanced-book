@@ -8,8 +8,8 @@ stop.engine:
 
 .PHONY: create.index
 create.index:
-	@poetry run python src/scripts/create_index.py
+	@poetry run python -m src.scripts.create_index
 
 .PHONY: delete.index
 delete.index:
-	@poetry run python src/scripts/delete_index.py
+	@poetry run python -m src.scripts.delete_index
