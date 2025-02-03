@@ -1,6 +1,7 @@
 import operator
 from typing import Annotated, Literal, Sequence, TypedDict
 
+from src.prompts import HelpDeskAgentPrompts
 from langchain_core.utils.function_calling import convert_to_openai_tool
 from langgraph.constants import Send
 from langgraph.graph import END, START, StateGraph
@@ -9,9 +10,9 @@ from langsmith.run_helpers import traceable
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
 
-from chapter4.src.configs import Settings
-from chapter4.src.custom_logger import setup_logger
-from chapter4.src.models import (
+from src.configs import Settings
+from src.custom_logger import setup_logger
+from src.models import (
     AgentResult,
     Plan,
     ReflectionResult,
@@ -19,7 +20,6 @@ from chapter4.src.models import (
     Subtask,
     ToolResult,
 )
-from chapter4.src.prompts import HelpDeskAgentPrompts
 
 MAX_CHALLENGE_COUNT = 3
 

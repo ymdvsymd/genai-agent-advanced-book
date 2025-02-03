@@ -3,9 +3,9 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
 
-from chapter4.src.configs import Settings
-from chapter4.src.custom_logger import setup_logger
-from chapter4.src.models import SearchOutput
+from src.configs import Settings
+from src.custom_logger import setup_logger
+from src.models import SearchOutput
 
 # 検索結果の最大取得数
 MAX_SEARCH_RESULTS = 3
