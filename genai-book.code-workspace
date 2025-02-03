@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "chapter4"
+		}
+	],
+	"settings": {
+		"notebook.formatOnSave.enabled": true,
+		"notebook.formatOnCellExecution": true
+	}
+}
