@@ -1,7 +1,6 @@
 import operator
 from typing import Annotated, Literal, Sequence, TypedDict
 
-from src.prompts import HelpDeskAgentPrompts
 from langchain_core.utils.function_calling import convert_to_openai_tool
 from langgraph.constants import Send
 from langgraph.graph import END, START, StateGraph
@@ -20,6 +19,7 @@ from src.models import (
     Subtask,
     ToolResult,
 )
+from src.prompts import HelpDeskAgentPrompts
 
 MAX_CHALLENGE_COUNT = 3
 
@@ -391,7 +391,6 @@ class HelpDeskAgent:
 
         return {"last_answer": response.choices[0].message.content}
 
-    # @traceable
     @traceable
     def _execute_subgraph(self, state: AgentState):
         subgraph = self._create_subgraph()
@@ -432,7 +431,6 @@ class HelpDeskAgent:
             for idx, _ in enumerate(state["plan"])
         ]
 
-    # @traceable
     @traceable
     def _should_continue_exec_subtask_flow(
         self, state: AgentSubGraphState

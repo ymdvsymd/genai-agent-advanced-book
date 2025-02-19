@@ -1,33 +1,27 @@
-[tool.poetry]
-name = "agent-book"
+[project]
+name = "chapter4"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <user@example.com>"]
+description = "Add your description here"
 readme = "README.md"
-packages = [{include = "agent_book"}]
-
-[tool.poetry.dependencies]
-python = "^3.11"
-openai = "^1.53.1"
-langgraph = "^0.2.14"
-pydantic-settings = "^2.4.0"
-langchain = "^0.2.14"
-elasticsearch = "^8.15.0"
-pypdf = "^4.3.1"
-langchain-community = "^0.2.13"
-langchain-text-splitters = "^0.2.2"
-qdrant-client = "^1.11.1"
-promptflow-tracing = "^1.16.1"
-promptflow-devkit = "^1.16.1"
-pygraphviz = "^1.13"
-
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.29.5"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+dependencies = [
+    "openai==1.53.1",
+    "langgraph==0.2.14",
+    "pydantic-settings==2.4.0",
+    "langchain>=0.2.15,<0.3.0",
+    "elasticsearch==8.15.0",
+    "pypdf==4.3.1",
+    "langchain-community==0.2.13",
+    "langchain-text-splitters==0.2.2",
+    "qdrant-client==1.11.1",
+    "promptflow-tracing==1.16.1",
+    "promptflow-devkit==1.16.1",
+    "pygraphviz==1.13",
+]
+[tool.uv]
+dev-dependencies = [
+    "ipykernel==6.29.5",
+]
 
 [tool.ruff]
 select = [
