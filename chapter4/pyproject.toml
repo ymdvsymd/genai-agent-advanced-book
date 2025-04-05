@@ -17,6 +17,7 @@ dependencies = [
     "promptflow-tracing==1.16.1",
     "promptflow-devkit==1.16.1",
     "pygraphviz==1.13",
+    "ruff>=0.11.4",
 ]
 [tool.uv]
 dev-dependencies = [
@@ -38,7 +39,8 @@ exclude = [
 ]
 line-length = 119
 indent-width = 4
-target-version = "py311"
+target-version = "py312"
+extend-include = ["*.ipynb"]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
