@@ -148,11 +148,7 @@ class HelpDeskAgent:
 
             # NOTE: トークン数節約のため過去の検索結果は除く
             # roleがtoolまたはtool_callsを持つものは除く
-            messages = [
-                message
-                for message in messages
-                if message["role"] != "tool" or "tool_calls" not in message
-            ]
+            messages = [message for message in messages if message["role"] != "tool" or "tool_calls" not in message]
 
             user_retry_prompt = self.prompts.subtask_retry_answer_user_prompt
             user_message = {"role": "user", "content": user_retry_prompt}
@@ -177,10 +173,7 @@ class HelpDeskAgent:
 
         ai_message = {
             "role": "assistant",
-            "tool_calls": [
-                tool_call.model_dump()
-                for tool_call in response.choices[0].message.tool_calls
-            ],
+            "tool_calls": [tool_call.model_dump() for tool_call in response.choices[0].message.tool_calls],
         }
 
         logger.info("Tool selection complete!")
@@ -334,13 +327,8 @@ class HelpDeskAgent:
             "is_completed": reflection_result.is_completed,
         }
 
-        if (
-            update_state["challenge_count"] >= MAX_CHALLENGE_COUNT
-            and not reflection_result.is_completed
-        ):
-            update_state["subtask_answer"] = (
-                f"{state['subtask']}の回答が見つかりませんでした。"
-            )
+        if update_state["challenge_count"] >= MAX_CHALLENGE_COUNT and not reflection_result.is_completed:
+            update_state["subtask_answer"] = f"{state['subtask']}の回答が見つかりませんでした。"
 
         logger.info("Reflection complete!")
         return update_state
@@ -360,10 +348,7 @@ class HelpDeskAgent:
         system_prompt = self.prompts.create_last_answer_system_prompt
 
         # サブタスク結果のうちタスク内容と回答のみを取得
-        subtask_results = [
-            (result.task_name, result.subtask_answer)
-            for result in state["subtask_results"]
-        ]
+        subtask_results = [(result.task_name, result.subtask_answer) for result in state["subtask_results"]]
         user_prompt = self.prompts.create_last_answer_user_prompt.format(
             question=state["question"],
             plan=state["plan"],
@@ -432,9 +417,7 @@ class HelpDeskAgent:
         ]
 
     @traceable
-    def _should_continue_exec_subtask_flow(
-        self, state: AgentSubGraphState
-    ) -> Literal["end", "continue"]:
+    def _should_continue_exec_subtask_flow(self, state: AgentSubGraphState) -> Literal["end", "continue"]:
         if state["is_completed"] or state["challenge_count"] >= MAX_CHALLENGE_COUNT:
             return "end"
         else:
