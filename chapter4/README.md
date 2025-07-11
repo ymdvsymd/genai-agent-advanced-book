@@ -23,7 +23,11 @@
 
 ## 環境構築
 
-### 1. Python 仮想環境の作成と依存関係のインストール
+### 1. chapter4のワークスペースを開く
+chapter4 ディレクトリに仮想環境を作成します。
+VS Code の ターミナルの追加で`chapter4` ワークスペースをを開きます。
+
+### 2. Python 仮想環境の作成と依存関係のインストール
 
 依存関係の解決には[uv]()を利用します。
 `uv`のインストールは以下のとおりです。
@@ -49,7 +53,7 @@ uv sync
 source .venv/bin/activate
 ```
 
-### 2. 環境変数のセット
+### 3. 環境変数のセット
 `.env` ファイルを作成し、以下の内容を追加します。
 
 ```env
@@ -59,7 +63,7 @@ OPENAI_API_BASE="https://api.openai.com/v1"
 OPENAI_MODEL= "gpt-4o-2024-08-06"
 ```
 
-### 3. 検索インデックスの構築
+### 4. 検索インデックスの構築
 
 makeコマンドを使用します。
 
@@ -69,4 +73,11 @@ make start.engine
 
 #インデックスの構築
 make create.index
+```
+
+`create.index`実行時にElasticsearchのコンテナでエラーが発生する場合は、`docker-compose.yml`の以下の行をコメントアウトしてください。
+
+```yaml
+    volumes:
+      - ./.rag_data/es_data:/usr/share/elasticsearch/data
 ```
