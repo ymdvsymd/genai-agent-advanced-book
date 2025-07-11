@@ -18,9 +18,6 @@
 		{
 			"path": "chapter7"
 		},
-		{
-			"path": "chapter9"
-		},
 	],
 	"settings": {
 		"notebook.formatOnSave.enabled": true,
