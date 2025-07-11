@@ -2,11 +2,13 @@
 
 このディレクトリは、書籍「現場で活用するための生成AIエージェント実践入門」（講談社サイエンティフィック社）の第4章に関連するソースコードとリソースを含んでいます。
 
+4章記載のコードを実行するためには、以下の手順に従ってください。
+
 ## 前提条件
 
-このプロジェクトを実行するには、以下の準びが必要です：
+このプロジェクトを実行するには、以下の準備が必要です：
 
-- Python 3.10 以上
+- Python 3.12 以上
 - Docker および Docker Compose
 - VSCode
 
@@ -21,7 +23,7 @@
 
 ## 環境構築
 
-1. **Python 仮想環境の作成と依存関係のインストール**
+### 1. Python 仮想環境の作成と依存関係のインストール
 
 依存関係の解決には[uv]()を利用します。
 `uv`のインストールは以下のとおりです。
@@ -41,27 +43,30 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync
 ```
 
-2. **検索インデックスの構築**
+インストール後に作成した仮想環境をアクティブにします。
 
-   makeコマンドを使用します。
+```bash
+source .venv/bin/activate
+```
 
-   ```bash
-   //コンテナの起動
-   make start.engine
+### 2. 環境変数のセット
+`.env` ファイルを作成し、以下の内容を追加します。
 
-   //インデックスの構築
-   make create.index
-   ```
+```env
+# OpenAI API設定
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_API_BASE="https://api.openai.com/v1"
+OPENAI_MODEL= "gpt-4o-2024-08-06"
+```
 
-## ディレクトリ構成
+### 3. 検索インデックスの構築
 
-- `data/`：データファイル（例: `XYZ_system_QA.csv`）
-- `notebooks/`：Jupyter Notebook ファイル
-- `src/`：ソースコード（例: `agent.py`, `configs.py`）
+makeコマンドを使用します。
 
-## 注意事項
+```bash
+#コンテナの起動
+make start.engine
 
-- Docker を使用する場合、事前に Docker が正しくインストールされていることを確認してください。
-- Python の仮想環境を有効にした状態で作業を行ってください。
-
-詳細は書籍の該当章を参照してください。
+#インデックスの構築
+make create.index
+```
