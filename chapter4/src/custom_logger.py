@@ -15,7 +15,7 @@ def setup_logger(name, level=logging.INFO):
     """
 
     logging.basicConfig(
-        level=logging.INFO,  # INFO 以上を表示
+        level=level,  # INFO 以上を表示
         format="%(asctime)s %(levelname)s %(message)s",
         handlers=[logging.StreamHandler(sys.stdout)],  # stdout へ
         force=True,  # 既存ハンドラを除去
