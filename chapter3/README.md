@@ -45,11 +45,6 @@ jupyter notebook
 # OpenAI API設定
 OPENAI_API_KEY=your_openai_api_key
 
-# Azure OpenAI API設定（Azureを使用する場合）
-AZURE_OPENAI_API_KEY=your_azure_openai_api_key
-AZURE_OPENAI_ENDPOINT=your_azure_openai_endpoint
-AZURE_OPENAI_API_VERSION=your_azure_openai_api_version
-
 # PostgreSQL接続設定（SQLDatabaseChain用）
 PGUSER=your_pg_user
 PGPASSWORD=your_pg_password
