@@ -33,6 +33,7 @@ dev = [
     "flake8",
     "isort",
     "pytest",
+    "ipykernel",
 ]
 
 [tool.black]

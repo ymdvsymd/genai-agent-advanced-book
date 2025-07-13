@@ -17,16 +17,11 @@ bash setup.sh
 # uvがインストールされていない場合はインストール
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# uvを使った環境構築
-uv venv --python 3.12
-source .venv/bin/activate
-uv pip install -r requirements.txt
-
-# 開発依存関係のインストール
-uv pip install ipykernel black flake8 isort pytest
+# uvを使った環境構築（推奨）
+uv sync
 
 # Jupyterカーネルの設定
-python -m ipykernel install --user --name genai_ch3 --display-name "Python 3.12 (Chapter 3)"
+uv run python -m ipykernel install --user --name genai_ch3 --display-name "Python 3.12 (Chapter 3)"
 ```
 
 ## Jupyter Notebookの実行
@@ -34,6 +29,11 @@ python -m ipykernel install --user --name genai_ch3 --display-name "Python 3.12 
 環境構築後、以下のコマンドでJupyter Notebookを起動できます：
 
 ```bash
+# uvを使用した起動（推奨）
+uv run jupyter notebook
+
+# または従来の方法
+source .venv/bin/activate
 jupyter notebook
 ```
 
