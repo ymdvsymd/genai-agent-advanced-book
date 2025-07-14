@@ -20,5 +20,5 @@
 実行する際はそれぞれの章のREADME.mdを参照し、環境構築や実行方法を確認してください。特に**Pythonの仮想環境はそれぞれの章のワークスペース内に作成することを想定しているのでご注意ください。**
 
 ## サポート
-- 疑問点や不具合の報告は **GitHub Issues** で受け付けています。不明な点などがございましたら、[issues](https://github.com/masamasa59/genai-agent-advanced-book/issues)をご覧ください。
+- 疑問点や不具合の報告はGitHubのIssuesで受け付けています。不明な点などがございましたら、[issues](https://github.com/masamasa59/genai-agent-advanced-book/issues)をご覧ください。
 - 書籍の誤植は、[誤植一覧](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=is%3Aissue%20state%3Aopen%20label%3A%E8%AA%A4%E6%A4%8D)にまとめています。あわせてご参照ください。
