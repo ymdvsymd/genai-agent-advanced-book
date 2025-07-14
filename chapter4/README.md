@@ -11,7 +11,7 @@
 - Python 3.12 以上
 - Docker および Docker Compose
 - VSCode
-- VSCodeのMulti-root Workspaces機能を使用し、ワークスペースとして開いている
+- VSCodeのMulti-root Workspaces機能を使用し、ワークスペースとして開いている（やり方は[こちら](../README.md)を参照）
 - OpenAIのアカウントとAPIキー
 
 また、Python の依存関係は `pyproject.toml` に記載されています。
@@ -77,6 +77,7 @@ make create.index
 ```
 
 `create.index`実行時にElasticsearchのコンテナでエラーが発生する場合は、`docker-compose.yml`の以下の行をコメントアウトしてください。
+コメントアウトした場合、Elasticsearchのデータは永続化されないため、コンテナを削除した場合に再度インデックスを構築する必要があります。
 
 ```yaml
     volumes:
