@@ -6,11 +6,7 @@
 
 本リポジトリでは、書籍のうち実装に関する章を中心に、各章のコードや設定ファイルを提供しています。
 
-本 GitHub の Issues にて、疑問点や修正点を管理しています。不明な点などがございましたら、[issues](https://github.com/masamasa59/genai-agent-advanced-book/issues)をご覧ください。
-
-書籍中の誤植は[誤植一覧](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=is%3Aissue%20state%3Aopen%20label%3A%E8%AA%A4%E6%A4%8D)以下にまとめております。
-
-## 本リポジトリの実行方法
+## 本リポジトリの使用方法
 
 本リポジトリではVSCodeを使用した実行を想定しています。
 
@@ -22,3 +18,7 @@
 
 各章のコードは、`chapter<章番号>`ディレクトリに格納されており、ワークスペースとして個別に開くことができます。
 実行する際はそれぞれの章のREADME.mdを参照し、環境構築や実行方法を確認してください。特に**Pythonの仮想環境はそれぞれの章のワークスペース内に作成することを想定しているのでご注意ください。**
+
+## サポート
+- 疑問点や不具合の報告は **GitHub Issues** で受け付けています。不明な点などがございましたら、[issues](https://github.com/masamasa59/genai-agent-advanced-book/issues)をご覧ください。
+- 書籍の誤植は、[誤植一覧](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=is%3Aissue%20state%3Aopen%20label%3A%E8%AA%A4%E6%A4%8D)にまとめています。あわせてご参照ください。
