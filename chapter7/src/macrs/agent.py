@@ -96,7 +96,7 @@ class RecommendationAgent(BaseAgent):
 
 # 雑談エージェント
 class ChitChatAgent(BaseAgent):
-    def __init__(self, client: AzureChatOpenAI):
+    def __init__(self, client: ChatOpenAI):
         self.client = client
 
     async def run(self, state: dict) -> dict:
@@ -117,7 +117,7 @@ class ChitChatAgent(BaseAgent):
 
 # プランナーエージェント
 class PlannerAgent(BaseAgent):
-    def __init__(self, client_router: AzureChatOpenAI):
+    def __init__(self, client_router: ChatOpenAI):
         self.client_router = client_router
 
     async def run(self, state: dict) -> dict:
@@ -142,16 +142,16 @@ class MACRS:
     def __init__(self):
         load_dotenv()
         self.settings = Settings()
-        self.deployment_name = self.settings.AZURE_OPENAI_DEPLOYMENT_NAME
+        self.deployment_name = self.settings.OPENAI_DEPLOYMENT_NAME
 
-        # Azure Chat OpenAI クライアントのセットアップ
-        self.client = AzureChatOpenAI(
-            azure_deployment=self.deployment_name,
+        # Chat OpenAI クライアントのセットアップ
+        self.client = ChatOpenAI(
+            deployment=self.deployment_name,
             verbose=False,
             max_tokens=1024,
             temperature=0,
         )
-        self.client_router = AzureChatOpenAI(
+        self.client_router = ChatOpenAI(
             model=self.deployment_name, temperature=0.7
         ).with_structured_output(Router)
 

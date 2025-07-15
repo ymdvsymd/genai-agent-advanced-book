@@ -4,60 +4,67 @@
 
 第7章では、**意思決定支援エージェント**と**パーソナライズ施策支援エージェント**の実装を通じて、マルチエージェントの構築方法を学習します。
 
+7章記載のコードを実行するためには、以下の手順に従ってください。
+
 ## 前提条件
 
 このプロジェクトを実行するには、以下の準備が必要です：
 
 - Python 3.12 以上
-- OpenAI API キー
+- Docker および Docker Compose
 - VSCode
-- JIRA アカウント（MACRSを使用する場合）
+- VSCodeのMulti-root Workspaces機能を使用し、ワークスペースとして開いている（やり方は[こちら](../README.md)を参照）
+- OpenAIのアカウントとAPIキー
 
 また、Python の依存関係は `pyproject.toml` に記載されています。
 
-## VS Code ワークスペースで開く
-
-1. VS Code を開きます。
-2. プロジェクトのルートディレクトリ（`genai-agent-advanced-book`）をワークスペースとして開きます。
-3. chapter7のワークスペースを選択
-
 ## 環境構築
 
-### Python 仮想環境の作成と依存関係のインストール
+### 1. chapter7のワークスペースを開く
+chapter7 ディレクトリに仮想環境を作成します。
+VSCode の ターミナルの追加で`chapter7` を選択します。
 
-依存関係の解決には`uv`を利用します。 `uv`のインストールは以下のとおりです。
+### 2. uvのインストール
 
-**pipを使う場合：**
+依存関係の解決には`uv`を利用します。
+`uv`を使ったことがない場合、以下の方法でインストールしてください。
 
+`pip`を使う場合：
 ```bash
 pip install uv
 ```
 
-**MacまたはLinuxの場合：**
-
+MacまたはLinuxの場合：
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 依存関係のインストール
+### 3. Python 仮想環境の作成と依存関係のインストール
 
+依存関係のインストール
 ```bash
 uv sync
 ```
 
-### 環境変数の設定
-
-`.env.sample` ファイルを `.env` にコピーして、必要な環境変数を設定します：
+インストール後に作成した仮想環境をアクティブにします。
 
 ```bash
-cp .env.sample .env
+source .venv/bin/activate
 ```
 
-`.env` ファイルで以下の項目を設定してください：
+### 4. 環境変数のセット
+.env.exampleファイルをコピーし、以下の内容を追記した`.env` ファイルを作成してください。
 
-- `OPENAI_API_KEY`: OpenAI API キー
-- `OPENAI_API_BASE`: OpenAI API のベースURL
-- `OPENAI_MODEL`: 使用するOpenAIモデル
+OpenAI APIキーを持っていない場合は、[OpenAIの公式サイト](https://platform.openai.com/)から取得してください。
+
+```bash
+
+```env
+# OpenAI API設定
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_API_BASE="https://api.openai.com/v1"
+OPENAI_MODEL= "gpt-4o-2024-08-06"
+```
 
 ## ディレクトリ構成
 
