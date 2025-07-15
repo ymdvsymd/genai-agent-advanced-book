@@ -1,9 +1,6 @@
 import asyncio
-import os
-import sys
 
 from configs import Settings
-from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.pregel import Pregel
@@ -14,10 +11,6 @@ from prompts import (
     QUESTION_PROMPT,
     RECOMMENDATION_PROMPT,
 )
-
-sys.path.append(
-    os.path.join(os.path.dirname(__file__), "../..")
-)  # srcディレクトリをパスに追加
 
 from src.custom_logger import setup_logger
 
@@ -140,7 +133,6 @@ class PlannerAgent(BaseAgent):
 # MACRSクラス：各エージェントを管理
 class MACRS:
     def __init__(self):
-        load_dotenv()
         self.settings = Settings()
         self.deployment_name = self.settings.OPENAI_DEPLOYMENT_NAME
 

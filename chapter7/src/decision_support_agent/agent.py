@@ -1,6 +1,3 @@
-import os
-import sys
-
 from configs import Settings
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langgraph.graph import END, START, StateGraph
@@ -13,12 +10,8 @@ from prompts import (
     CONTENTS_LIST,
     PERSONA_CREATE_SYSTEM_PROMPT,
     PERSONA_GENERATOR_PROMPT,
-    QUESTIONNAIRE,
+    DEFAULT_QUESTIONNAIRE,
 )
-
-sys.path.append(
-    os.path.join(os.path.dirname(__file__), "../..")
-)  # srcディレクトリをパスに追加
 
 from src.custom_logger import setup_logger
 
@@ -65,7 +58,7 @@ class PersonaGeneratorAgent(BaseAgent):
         return persona_profile_list
 
     def run(self, state: AgentState) -> AgentState:
-        persona_profile_list = []
+        persona_profile_list: list[str] = []
         message = [
             {
                 "role": "system",
@@ -201,7 +194,7 @@ class DecisionSupportAgent:
             model=self.model_name, temperature=0
         ).with_structured_output(Improvement)
         self.embeddings = OpenAIEmbeddings()
-        self.default_questionnaire = QUESTIONNAIRE
+        self.default_questionnaire = DEFAULT_QUESTIONNAIRE
 
         # 各エージェントのインスタンス化
         self.persona_generator = PersonaGeneratorAgent(
@@ -240,7 +233,7 @@ class DecisionSupportAgent:
 
         initial_state: AgentState = {
             "request": request,
-            "contents": CONTENTS_LIST,
+            "contents": list(CONTENTS_LIST),
             "personas": [],
             "questionnaire": self.default_questionnaire,
             "report": "",
@@ -254,6 +247,9 @@ class DecisionSupportAgent:
 # --- 利用例 ---
 if __name__ == "__main__":
     agent = DecisionSupportAgent()
-    user_request = "生成AIエージェントを活用して業務効率化を目指すビジネスパーソンに興味をもってもらえるようにコンテンツのテーマを改善して"
+    user_request = (
+        "生成AIエージェントを活用して業務効率化を目指すビジネスパーソンに"
+        "興味をもってもらえるようにコンテンツのテーマを改善して"
+    )
     result = agent.run_agent(user_request)
     logger.info("最終実行結果: %s", result)
