@@ -454,11 +454,11 @@ dependencies = [
     { name = "langchain-community" },
     { name = "langchain-core" },
     { name = "langchain-experimental" },
+    { name = "langchain-openai" },
     { name = "langgraph" },
     { name = "openai" },
     { name = "psycopg2-binary" },
     { name = "pydantic" },
-    { name = "pydantic-settings" },
     { name = "python-dotenv" },
     { name = "requests" },
     { name = "tavily-python" },
@@ -468,6 +468,7 @@ dependencies = [
 dev = [
     { name = "black" },
     { name = "flake8" },
+    { name = "ipykernel" },
     { name = "isort" },
     { name = "pytest" },
 ]
@@ -486,6 +487,7 @@ requires-dist = [
     { name = "black", marker = "extra == 'dev'" },
     { name = "duckduckgo-search", specifier = ">=3.0.0" },
     { name = "flake8", marker = "extra == 'dev'" },
+    { name = "ipykernel", marker = "extra == 'dev'" },
     { name = "ipython", specifier = ">=8.0.0" },
     { name = "isort", marker = "extra == 'dev'" },
     { name = "jupyter", specifier = ">=1.0.0" },
@@ -493,13 +495,13 @@ requires-dist = [
     { name = "langchain-community", specifier = ">=0.2.13" },
     { name = "langchain-core", specifier = ">=0.3.0" },
     { name = "langchain-experimental", specifier = ">=0.3.0" },
+    { name = "langchain-openai", specifier = ">=0.3.28" },
     { name = "langgraph", specifier = ">=0.2.14" },
     { name = "openai", specifier = ">=1.53.1" },
     { name = "psycopg2-binary", specifier = ">=2.9.9" },
     { name = "pydantic", specifier = ">=2.0.0" },
-    { name = "pydantic-settings", specifier = ">=2.4.0" },
     { name = "pytest", marker = "extra == 'dev'" },
-    { name = "python-dotenv", specifier = ">=1.0.0" },
+    { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "requests", specifier = ">=2.31.0" },
     { name = "tavily-python", specifier = ">=0.3.0" },
 ]
@@ -1072,6 +1074,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/27/56/a8acbb08a03383c28875b3b151e4cefea5612266917fbd6fc3c14c21e172/langchain_experimental-0.3.4.tar.gz", hash = "sha256:937c4259ee4a639c618d19acf0e2c5c2898ef127050346edc5655259aa281a21", size = 140532, upload-time = "2024-12-20T15:16:09.42Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b2/27/fe8caa4884611286b1f7d6c5cfd76e1fef188faaa946db4fde6daa1cd2cd/langchain_experimental-0.3.4-py3-none-any.whl", hash = "sha256:2e587306aea36b60fa5e5fc05dc7281bee9f60a806f0bf9d30916e0ee096af80", size = 209154, upload-time = "2024-12-20T15:16:07.006Z" },
+]
+
+[[package]]
+name = "langchain-openai"
+version = "0.3.28"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "langchain-core" },
+    { name = "openai" },
+    { name = "tiktoken" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6b/1d/90cd764c62d5eb822113d3debc3abe10c8807d2c0af90917bfe09acd6f86/langchain_openai-0.3.28.tar.gz", hash = "sha256:6c669548dbdea325c034ae5ef699710e2abd054c7354fdb3ef7bf909dc739d9e", size = 753951, upload-time = "2025-07-14T10:50:44.076Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/91/56/75f3d84b69b8bdae521a537697375e1241377627c32b78edcae337093502/langchain_openai-0.3.28-py3-none-any.whl", hash = "sha256:4cd6d80a5b2ae471a168017bc01b2e0f01548328d83532400a001623624ede67", size = 70571, upload-time = "2025-07-14T10:50:42.492Z" },
 ]
 
 [[package]]

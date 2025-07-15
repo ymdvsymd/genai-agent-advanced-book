@@ -12,7 +12,6 @@ license = {text = "MIT"}
 dependencies = [
     "openai>=1.53.1",
     "pydantic>=2.0.0",
-    "pydantic-settings>=2.4.0",
     "langchain>=0.3.0",
     "langchain-community>=0.2.13",
     "langchain-core>=0.3.0",
@@ -21,10 +20,11 @@ dependencies = [
     "langgraph>=0.2.14",
     "jupyter>=1.0.0",
     "ipython>=8.0.0",
-    "psycopg2-binary>=2.9.9",  # PostgreSQL接続用
-    "python-dotenv>=1.0.0",    # 環境変数管理用
-    "tavily-python>=0.3.0",    # Tavily検索用
-    "langchain-experimental>=0.3.0",  # SQLDatabaseChain用
+    "psycopg2-binary>=2.9.9", # PostgreSQL接続用
+    "tavily-python>=0.3.0", # Tavily検索用
+    "langchain-experimental>=0.3.0", # SQLDatabaseChain用
+    "python-dotenv>=1.1.1",
+    "langchain-openai>=0.3.28",
 ]
 
 [project.optional-dependencies]

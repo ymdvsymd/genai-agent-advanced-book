@@ -10,5 +10,12 @@
             "source.fixAll.ruff": "explicit",
             "source.organizeImports.ruff": "explicit"
         }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",         // Python 言語サポート
+            "ms-python.vscode-pylance", // 型チェック＆リッチ補完
+            "ms-toolsai.jupyter"        // Jupyter ノートブック
+        ]
     }
 }
