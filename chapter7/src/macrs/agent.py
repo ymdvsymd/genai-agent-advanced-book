@@ -1,18 +1,18 @@
 import asyncio
 
-from configs import Settings
+from macrs.configs import Settings
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.pregel import Pregel
-from models import AgentState, Router
-from prompts import (
+from macrs.models import AgentState, Router
+from macrs.prompts import (
     CHITCHAT_PROMPT,
     PLANNER_PROMPT,
     QUESTION_PROMPT,
     RECOMMENDATION_PROMPT,
 )
 
-from src.custom_logger import setup_logger
+from macrs.custom_logger import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -134,17 +134,17 @@ class PlannerAgent(BaseAgent):
 class MACRS:
     def __init__(self):
         self.settings = Settings()
-        self.deployment_name = self.settings.OPENAI_DEPLOYMENT_NAME
+        self.model_name = self.settings.OPENAI_MODEL
 
         # Chat OpenAI クライアントのセットアップ
         self.client = ChatOpenAI(
-            deployment=self.deployment_name,
+            model=self.model_name,
             verbose=False,
             max_tokens=1024,
             temperature=0,
         )
         self.client_router = ChatOpenAI(
-            model=self.deployment_name, temperature=0.7
+            model=self.model_name, temperature=0.7
         ).with_structured_output(Router)
 
         # 各エージェントのインスタンス化

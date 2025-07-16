@@ -1,9 +1,9 @@
-from configs import Settings
+from decision_support_agent.configs import Settings
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langgraph.graph import END, START, StateGraph
 from langgraph.pregel import Pregel
-from models import AgentResult, AgentState, Improvement, Persona, RolePlayList
-from prompts import (
+from decision_support_agent.models import AgentResult, AgentState, Improvement, Persona, RolePlayList
+from decision_support_agent.prompts import (
     CONTENT_IMPROVER_PROMPT,
     CONTENTS_ANALYZER_PROMPT,
     CONTENTS_EVALUATOR_PROMPT,
@@ -13,7 +13,7 @@ from prompts import (
     DEFAULT_QUESTIONNAIRE,
 )
 
-from src.custom_logger import setup_logger
+from decision_support_agent.custom_logger import setup_logger
 
 logger = setup_logger(__name__)
 
