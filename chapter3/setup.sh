@@ -16,25 +16,13 @@ else
     echo "uvは既にインストールされています: $(which uv)"
 fi
 
-# 仮想環境の作成
-echo "Python 3.12の仮想環境を作成しています..."
-uv venv --python 3.12
-
-# 仮想環境をアクティベート
-echo "仮想環境をアクティベートしています..."
-source .venv/bin/activate
-
-# パッケージのインストール
-echo "パッケージをインストールしています..."
-uv pip install -r requirements.txt
-
-# 開発依存関係のインストール
-echo "開発依存関係をインストールしています..."
-uv pip install ipykernel black flake8 isort pytest
+# 仮想環境の作成と依存関係のインストール
+echo "Python 3.12の仮想環境を作成し、依存関係をインストールしています..."
+uv sync
 
 # Jupyter用カーネルを設定 (Python 3.12環境)
 echo "Jupyterカーネルを登録しています..."
-.venv/bin/python -m ipykernel install --user --name genai_ch3 --display-name "Python 3.12 (Chapter 3)"
+uv run python -m ipykernel install --user --name genai_ch3 --display-name "Python 3.12 (Chapter 3)"
 
 # 環境変数ファイルの作成（すでに存在する場合はスキップ）
 if [ ! -f .env ]; then
@@ -45,4 +33,5 @@ fi
 
 echo "環境構築が完了しました！"
 echo "以下のコマンドで仮想環境をアクティベートできます：source .venv/bin/activate"
-echo "以下のコマンドでJupyter Notebookを起動できます：jupyter notebook"
+echo "または uv run を使用してコマンドを実行できます：uv run python your_script.py"
+echo "以下のコマンドでJupyter Notebookを起動できます：uv run jupyter notebook"
