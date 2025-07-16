@@ -1,25 +1,18 @@
 import asyncio
-import os
-import sys
 
-from configs import Settings
-from dotenv import load_dotenv
+from macrs.configs import Settings
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.pregel import Pregel
-from models import AgentState, Router
-from prompts import (
+from macrs.models import AgentState, Router
+from macrs.prompts import (
     CHITCHAT_PROMPT,
     PLANNER_PROMPT,
     QUESTION_PROMPT,
     RECOMMENDATION_PROMPT,
 )
 
-sys.path.append(
-    os.path.join(os.path.dirname(__file__), "../..")
-)  # srcディレクトリをパスに追加
-
-from src.custom_logger import setup_logger
+from macrs.custom_logger import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -96,7 +89,7 @@ class RecommendationAgent(BaseAgent):
 
 # 雑談エージェント
 class ChitChatAgent(BaseAgent):
-    def __init__(self, client: AzureChatOpenAI):
+    def __init__(self, client: ChatOpenAI):
         self.client = client
 
     async def run(self, state: dict) -> dict:
@@ -117,7 +110,7 @@ class ChitChatAgent(BaseAgent):
 
 # プランナーエージェント
 class PlannerAgent(BaseAgent):
-    def __init__(self, client_router: AzureChatOpenAI):
+    def __init__(self, client_router: ChatOpenAI):
         self.client_router = client_router
 
     async def run(self, state: dict) -> dict:
@@ -140,19 +133,18 @@ class PlannerAgent(BaseAgent):
 # MACRSクラス：各エージェントを管理
 class MACRS:
     def __init__(self):
-        load_dotenv()
         self.settings = Settings()
-        self.deployment_name = self.settings.AZURE_OPENAI_DEPLOYMENT_NAME
+        self.model_name = self.settings.OPENAI_MODEL
 
-        # Azure Chat OpenAI クライアントのセットアップ
-        self.client = AzureChatOpenAI(
-            azure_deployment=self.deployment_name,
+        # Chat OpenAI クライアントのセットアップ
+        self.client = ChatOpenAI(
+            model=self.model_name,
             verbose=False,
             max_tokens=1024,
             temperature=0,
         )
-        self.client_router = AzureChatOpenAI(
-            model=self.deployment_name, temperature=0.7
+        self.client_router = ChatOpenAI(
+            model=self.model_name, temperature=0.7
         ).with_structured_output(Router)
 
         # 各エージェントのインスタンス化
