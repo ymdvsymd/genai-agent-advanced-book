@@ -11,6 +11,7 @@
 - VSCode
 - VSCodeのMulti-root Workspaces機能を使用し、ワークスペースとして開いている（やり方は[こちら](../README.md)を参照）
 - OpenAIのアカウントとAPIキー
+- TAVILYのアカウントとAPIキー
 
 また、Python の依存関係は `pyproject.toml` に記載されています。
 
