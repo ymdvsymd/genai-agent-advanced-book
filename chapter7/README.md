@@ -11,7 +11,6 @@
 このプロジェクトを実行するには、以下の準備が必要です：
 
 - Python 3.12 以上
-- Docker および Docker Compose
 - VSCode
 - VSCodeのMulti-root Workspaces機能を使用し、ワークスペースとして開いている（やり方は[こちら](../README.md)を参照）
 - OpenAIのアカウントとAPIキー
