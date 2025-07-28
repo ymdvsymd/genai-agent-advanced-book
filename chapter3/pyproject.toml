@@ -1,7 +1,7 @@
 [project]
 name = "chapter3"
 version = "0.1.0"
-description = "現場で活用するための生成AIエージェント実践入門 第3章"
+description = "現場で活用するためのAIエージェント実践入門 第3章"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
