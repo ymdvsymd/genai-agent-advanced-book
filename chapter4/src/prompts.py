@@ -49,7 +49,7 @@ SUBTASK_SYSTEM_PROMPT = """
 
 """
 
-SUBTASK_TOOL_EXECUTION_USER_PROMPT = """"
+SUBTASK_TOOL_EXECUTION_USER_PROMPT = """
 ユーザーの元の質問: {question}
 回答のための計画: {plan}
 サブタスク: {subtask}
