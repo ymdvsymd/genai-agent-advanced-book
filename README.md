@@ -21,4 +21,4 @@
 
 ## サポート
 - 疑問点や不具合の報告はGitHubのIssuesで受け付けています。不明な点などがございましたら、[issues](https://github.com/masamasa59/genai-agent-advanced-book/issues)をご覧ください。
-- 書籍の誤植（修正対応済み）は、[誤植一覧](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=state%3Aclosed%20label%3A%E8%AA%A4%E6%A4%8D)にまとめています。修正対応前の誤植は[誤植一覧 (Open)](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=state%3Aopen%20label%3A%E8%AA%A4%E6%A4%8D)にあります。あわせてご参照ください。
+- 書籍の誤植（修正対応済み）は、[誤植一覧 (Closed)](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=state%3Aclosed%20label%3A%E8%AA%A4%E6%A4%8D)にまとめています。修正対応前の誤植は[誤植一覧 (Open)](https://github.com/masamasa59/genai-agent-advanced-book/issues?q=state%3Aopen%20label%3A%E8%AA%A4%E6%A4%8D)にあります。あわせてご参照ください。
