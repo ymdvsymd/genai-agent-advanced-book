@@ -1,10 +1,10 @@
 .PHONY: start.engine
 start.engine:
-	@docker compose up -d
+	@docker-compose up -d
 
 .PHONY: stop.engine
 stop.engine:
-	@docker compose down
+	@docker-compose down
 
 .PHONY: create.index
 create.index:
