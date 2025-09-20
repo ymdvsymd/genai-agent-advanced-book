@@ -459,23 +459,25 @@ class HelpDeskAgent:
         """
         workflow = StateGraph(AgentState)
 
-        # Add the plan node
+        # 計画ノードを追加
         workflow.add_node("create_plan", self.create_plan)
 
-        # Add the execution step
+        # サブグラフの実行ノードを追加
         workflow.add_node("execute_subtasks", self._execute_subgraph)
 
+        # 最終回答作成ノードを追加
         workflow.add_node("create_answer", self.create_answer)
 
+        # 実行の視点を計画作成ノードにセット
         workflow.add_edge(START, "create_plan")
 
-        # From plan we go to agent
+        # 計画からサブグラフの実行条件
         workflow.add_conditional_edges(
             "create_plan",
             self._should_continue_exec_subtasks,
         )
 
-        # From agent, we replan
+        # サブグラフの実行がすべて終了したら最終回答へ
         workflow.add_edge("execute_subtasks", "create_answer")
 
         workflow.set_finish_point("create_answer")
