@@ -197,7 +197,7 @@ class HelpDeskAgent:
         # 最後のメッセージからツールの呼び出しを取得
         tool_calls = messages[-1]["tool_calls"]
 
-        # 最後のメッセージからツールの呼び出しか確認
+        # 最後のメッセージがツールの呼び出しか確認
         if tool_calls is None:
             logger.error("Tool calls are None")
             logger.error(f"Messages: {messages}")
