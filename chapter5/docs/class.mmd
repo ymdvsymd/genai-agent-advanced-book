@@ -1,0 +1,212 @@
+classDiagram
+  %% External base classes for inheritance visualization
+  class BaseModel
+  class TypedDict
+
+  %% ==========================
+  %% src/models
+  %% ==========================
+  class DataThread {
+    +process_id: str
+    +thread_id: int
+    +user_request: str?
+    +code: str?
+    +error: str?
+    +stderr: str?
+    +stdout: str?
+    +is_completed: bool
+    +observation: str?
+    +results: list[dict]
+    +pathes: dict
+  }
+  DataThread --|> BaseModel
+
+  class Task {
+    +hypothesis: str
+    +purpose: str
+    +description: str
+    +chart_type: str
+  }
+  Task --|> BaseModel
+
+  class Plan {
+    +purpose: str
+    +archivement: str
+    +tasks: list[Task]
+  }
+  Plan --|> BaseModel
+
+  class SubTask {
+    +state: bool
+    +task: Task
+  }
+  SubTask --|> BaseModel
+
+  class Program {
+    +achievement_condition: str
+    +execution_plan: str
+    +code: str
+  }
+  Program --|> BaseModel
+
+  class Review {
+    +observation: str
+    +is_completed: bool
+  }
+  Review --|> BaseModel
+
+  class LLMResponse {
+    +messages: list
+    +content: str | BaseModel
+    +model: str
+    +created_at: int
+    +input_tokens: int
+    +output_tokens: int
+    +cost: float?
+  }
+  LLMResponse --|> BaseModel
+
+  %% ==========================
+  %% src/graph/models
+  %% ==========================
+  class DataThread {
+    +user_request: str?
+    +code: str?
+    +error: str?
+    +stderr: str?
+    +stdout: str?
+    +is_completed: bool
+    +observation: str?
+    +results: list[dict]
+    +pathes: dict
+  }
+  DataThread --|> BaseModel
+
+  class ProgrammerState {
+    +data_file: str
+    +data_info: str
+    +user_request: str
+    +data_threads: list[DataThread]
+    +sandbox_id: str
+    +next_node: str
+    +sub_tasks: list[SubTask]
+  }
+  ProgrammerState --|> TypedDict
+
+  class DataAnalysisState {
+    +data_file: str
+    +data_info: str
+    +user_goal: str
+    +user_request: str
+    +sub_tasks: list[SubTask]
+    +data_threads: list[DataThread]
+    +sub_task_threads: list[DataThread]
+    +report: str
+    +user_feedback: str
+    +user_approval: bool
+    +sandbox_id: str
+    +next_node: str
+  }
+  DataAnalysisState --|> TypedDict
+
+  %% ==========================
+  %% src/graph (modules as classes)
+  %% ==========================
+  class data_analysis {
+    static open_programmer(state)
+    static_close_programmer(state)
+    static build_data_analysis_graph()
+    static invoke_workflow(workflow, input_data, config)
+    static main()
+  }
+
+  class programmer {
+    static _close_programmer_node(state)
+    static build_programmer_graph(close_programmer_fn)
+    static run_programmer_workflow(workflow, user_request, data_file, recursion_limit)
+    static main()
+  }
+
+  %% ==========================
+  %% src/graph/nodes (modules as classes)
+  %% ==========================
+  class approve_plan {
+    static approve_plan(state)
+  }
+
+  class execute_code {
+    static execute_code_node(state)
+  }
+
+  class generate_code {
+    static generate_code_node(state)
+  }
+
+  class generate_plan {
+    static generate_plan_node(state)
+  }
+
+  class generate_report {
+    static generate_report_node(state)
+  }
+
+  class generate_review {
+    static generate_review_node(state)
+  }
+
+  class set_dataframe {
+    static set_dataframe_node(state)
+  }
+
+  %% ==========================
+  %% src/modules (modules as classes)
+  %% ==========================
+  class describe_dataframe {
+    static describe_dataframe(file_object, template_file)
+  }
+
+  class execute_code {
+    static execute_code(sandbox, process_id, thread_id, code, user_request, timeout)
+  }
+
+  class generate_code {
+    static generate_code(data_info, user_request, remote_save_dir, previous_thread, model, template_file)
+  }
+
+  class generate_plan {
+    static generate_plan(data_info, user_request, model, template_file)
+  }
+
+  class generate_report {
+    static generate_report(data_info, user_request, process_data_threads, model, output_dir, template_file)
+  }
+
+  class generate_review {
+    static generate_review(data_info, user_request, data_thread, has_results, remote_save_dir, model, template_file)
+  }
+
+  class set_dataframe {
+    static set_dataframe(sandbox, file_object, timeout, remote_data_path)
+  }
+
+  %% ==========================
+  %% src/llms (modules as classes)
+  %% ==========================
+  class openai {
+    static generate_response(messages, model, response_format)
+  }
+
+  class load_template {
+    static load_template(template_file)
+  }
+
+  %% ==========================
+  %% Key relations (selected)
+  %% ==========================
+  Plan --> Task : tasks*
+  SubTask --> Task : task
+  ProgrammerState --> DataThread : data_threads*
+  ProgrammerState --> SubTask : sub_tasks*
+  DataAnalysisState --> SubTask : sub_tasks*
+  DataAnalysisState --> DataThread : data_threads*
+  DataAnalysisState --> DataThread : sub_task_threads*
