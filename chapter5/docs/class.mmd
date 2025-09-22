@@ -130,62 +130,62 @@ classDiagram
   %% ==========================
   %% src/graph/nodes (modules as classes)
   %% ==========================
-  class approve_plan {
+  class nodes_approve_plan {
     static approve_plan(state)
   }
 
-  class execute_code {
+  class nodes_execute_code {
     static execute_code_node(state)
   }
 
-  class generate_code {
+  class nodes_generate_code {
     static generate_code_node(state)
   }
 
-  class generate_plan {
+  class nodes_generate_plan {
     static generate_plan_node(state)
   }
 
-  class generate_report {
+  class nodes_generate_report {
     static generate_report_node(state)
   }
 
-  class generate_review {
+  class nodes_generate_review {
     static generate_review_node(state)
   }
 
-  class set_dataframe {
+  class nodes_set_dataframe {
     static set_dataframe_node(state)
   }
 
   %% ==========================
   %% src/modules (modules as classes)
   %% ==========================
-  class describe_dataframe {
+  class modules_describe_dataframe {
     static describe_dataframe(file_object, template_file)
   }
 
-  class execute_code {
+  class modules_execute_code {
     static execute_code(sandbox, process_id, thread_id, code, user_request, timeout)
   }
 
-  class generate_code {
+  class modules_generate_code {
     static generate_code(data_info, user_request, remote_save_dir, previous_thread, model, template_file)
   }
 
-  class generate_plan {
+  class modules_generate_plan {
     static generate_plan(data_info, user_request, model, template_file)
   }
 
-  class generate_report {
+  class modules_generate_report {
     static generate_report(data_info, user_request, process_data_threads, model, output_dir, template_file)
   }
 
-  class generate_review {
+  class modules_generate_review {
     static generate_review(data_info, user_request, data_thread, has_results, remote_save_dir, model, template_file)
   }
 
-  class set_dataframe {
+  class modules_set_dataframe {
     static set_dataframe(sandbox, file_object, timeout, remote_data_path)
   }
 
@@ -218,65 +218,65 @@ classDiagram
   data_analysis ..> ProgrammerState : import
   data_analysis ..> DataAnalysisState : import
   data_analysis ..> approve_plan : calls
-  data_analysis ..> generate_plan : calls
-  data_analysis ..> generate_report : calls
+  data_analysis ..> nodes_generate_plan : calls
+  data_analysis ..> nodes_generate_report : calls
   data_analysis ..> programmer : calls
 
   %% graph/programmer.py
   programmer ..> ProgrammerState : import
-  programmer ..> set_dataframe : calls
-  programmer ..> generate_code : calls
-  programmer ..> execute_code : calls
-  programmer ..> generate_review : calls
+  programmer ..> nodes_set_dataframe : calls
+  programmer ..> nodes_generate_code : calls
+  programmer ..> nodes_execute_code : calls
+  programmer ..> nodes_generate_review : calls
 
   %% graph/nodes/*.py -> modules
-  approve_plan ..> DataAnalysisState : import
-  execute_code ..> ProgrammerState : import
-  execute_code ..> DataThread : uses
-  execute_code ..> execute_code : calls
-  generate_code ..> ProgrammerState : import
-  generate_code ..> DataThread : uses
-  generate_code ..> describe_dataframe : calls
-  generate_code ..> generate_code : calls
-  generate_plan ..> DataAnalysisState : import
-  generate_plan ..> SubTask : uses
-  generate_plan ..> describe_dataframe : calls
-  generate_plan ..> generate_plan : calls
-  generate_report ..> DataAnalysisState : import
-  generate_report ..> generate_report : calls
-  generate_review ..> ProgrammerState : import
-  generate_review ..> Review : uses
-  generate_review ..> generate_review : calls
-  set_dataframe ..> ProgrammerState : import
-  set_dataframe ..> describe_dataframe : calls
-  set_dataframe ..> set_dataframe : calls
+  nodes_approve_plan ..> DataAnalysisState : import
+  nodes_execute_code ..> ProgrammerState : import
+  nodes_execute_code ..> DataThread : uses
+  nodes_execute_code ..> modules_execute_code : calls
+  nodes_generate_code ..> ProgrammerState : import
+  nodes_generate_code ..> DataThread : uses
+  nodes_generate_code ..> modules_describe_dataframe : calls
+  nodes_generate_code ..> modules_generate_code : calls
+  nodes_generate_plan ..> DataAnalysisState : import
+  nodes_generate_plan ..> SubTask : uses
+  nodes_generate_plan ..> modules_describe_dataframe : calls
+  nodes_generate_plan ..> modules_generate_plan : calls
+  nodes_generate_report ..> DataAnalysisState : import
+  nodes_generate_report ..> modules_generate_report : calls
+  nodes_generate_review ..> ProgrammerState : import
+  nodes_generate_review ..> Review : uses
+  nodes_generate_review ..> modules_generate_review : calls
+  nodes_set_dataframe ..> ProgrammerState : import
+  nodes_set_dataframe ..> modules_describe_dataframe : calls
+  nodes_set_dataframe ..> modules_set_dataframe : calls
 
   %% modules/*.py -> llms/* and models/*
-  describe_dataframe ..> load_template : uses
+  modules_describe_dataframe ..> load_template : uses
 
-  execute_code ..> DataThread : returns
+  modules_execute_code ..> DataThread : returns
 
-  generate_code ..> DataThread : uses
-  generate_code ..> Program : uses
-  generate_code ..> LLMResponse : returns
-  generate_code ..> openai : uses
-  generate_code ..> load_template : uses
+  modules_generate_code ..> DataThread : uses
+  modules_generate_code ..> Program : uses
+  modules_generate_code ..> LLMResponse : returns
+  modules_generate_code ..> openai : uses
+  modules_generate_code ..> load_template : uses
 
-  generate_plan ..> Plan : returns
-  generate_plan ..> LLMResponse : returns
-  generate_plan ..> openai : uses
-  generate_plan ..> load_template : uses
+  modules_generate_plan ..> Plan : returns
+  modules_generate_plan ..> LLMResponse : returns
+  modules_generate_plan ..> openai : uses
+  modules_generate_plan ..> load_template : uses
 
-  generate_report ..> LLMResponse : returns
-  generate_report ..> DataThread : reads
-  generate_report ..> openai : uses
-  generate_report ..> load_template : uses
+  modules_generate_report ..> LLMResponse : returns
+  modules_generate_report ..> DataThread : reads
+  modules_generate_report ..> openai : uses
+  modules_generate_report ..> load_template : uses
 
-  generate_review ..> LLMResponse : returns
-  generate_review ..> DataThread : reads
-  generate_review ..> Review : returns
-  generate_review ..> openai : uses
-  generate_review ..> load_template : uses
+  modules_generate_review ..> LLMResponse : returns
+  modules_generate_review ..> DataThread : reads
+  modules_generate_review ..> Review : returns
+  modules_generate_review ..> openai : uses
+  modules_generate_review ..> load_template : uses
 
   %% llms/apis/openai.py -> llms/models/llm_response.py
   openai ..> LLMResponse : returns
