@@ -210,3 +210,73 @@ classDiagram
   DataAnalysisState --> SubTask : sub_tasks*
   DataAnalysisState --> DataThread : data_threads*
   DataAnalysisState --> DataThread : sub_task_threads*
+
+  %% ==========================
+  %% Module dependency relations (src)
+  %% ==========================
+  %% graph/data_analysis.py
+  data_analysis ..> ProgrammerState : import
+  data_analysis ..> DataAnalysisState : import
+  data_analysis ..> approve_plan : calls
+  data_analysis ..> generate_plan : calls
+  data_analysis ..> generate_report : calls
+  data_analysis ..> programmer : calls
+
+  %% graph/programmer.py
+  programmer ..> ProgrammerState : import
+  programmer ..> set_dataframe : calls
+  programmer ..> generate_code : calls
+  programmer ..> execute_code : calls
+  programmer ..> generate_review : calls
+
+  %% graph/nodes/*.py -> modules
+  approve_plan ..> DataAnalysisState : import
+  execute_code ..> ProgrammerState : import
+  execute_code ..> DataThread : uses
+  execute_code ..> execute_code : calls
+  generate_code ..> ProgrammerState : import
+  generate_code ..> DataThread : uses
+  generate_code ..> describe_dataframe : calls
+  generate_code ..> generate_code : calls
+  generate_plan ..> DataAnalysisState : import
+  generate_plan ..> SubTask : uses
+  generate_plan ..> describe_dataframe : calls
+  generate_plan ..> generate_plan : calls
+  generate_report ..> DataAnalysisState : import
+  generate_report ..> generate_report : calls
+  generate_review ..> ProgrammerState : import
+  generate_review ..> Review : uses
+  generate_review ..> generate_review : calls
+  set_dataframe ..> ProgrammerState : import
+  set_dataframe ..> describe_dataframe : calls
+  set_dataframe ..> set_dataframe : calls
+
+  %% modules/*.py -> llms/* and models/*
+  describe_dataframe ..> load_template : uses
+
+  execute_code ..> DataThread : returns
+
+  generate_code ..> DataThread : uses
+  generate_code ..> Program : uses
+  generate_code ..> LLMResponse : returns
+  generate_code ..> openai : uses
+  generate_code ..> load_template : uses
+
+  generate_plan ..> Plan : returns
+  generate_plan ..> LLMResponse : returns
+  generate_plan ..> openai : uses
+  generate_plan ..> load_template : uses
+
+  generate_report ..> LLMResponse : returns
+  generate_report ..> DataThread : reads
+  generate_report ..> openai : uses
+  generate_report ..> load_template : uses
+
+  generate_review ..> LLMResponse : returns
+  generate_review ..> DataThread : reads
+  generate_review ..> Review : returns
+  generate_review ..> openai : uses
+  generate_review ..> load_template : uses
+
+  %% llms/apis/openai.py -> llms/models/llm_response.py
+  openai ..> LLMResponse : returns
