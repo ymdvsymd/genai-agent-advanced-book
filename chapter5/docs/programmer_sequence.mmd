@@ -1,0 +1,68 @@
+%% Programmer workflow sequence diagram (programmer.py)
+%% This describes interactions across src/graph/nodes and src/modules used by the workflow.
+
+sequenceDiagram
+    autonumber
+
+    participant User as User
+    participant Prog as programmer.py run_programmer_workflow
+    participant Graph as LangGraph.StateGraph
+    participant Set as Node set_dataframe
+    participant GenCode as Node generate_code
+    participant Exec as Node execute_code
+    participant Review as Node generate_review
+    participant Close as Node close_programmer
+    participant SB as e2b.Sandbox
+    participant ModDF as modules.describe_dataframe
+    participant ModSD as modules.set_dataframe
+    participant ModGC as modules.generate_code
+    participant ModEX as modules.execute_code
+    participant ModGR as modules.generate_review
+    participant OpenAI as llms.apis.openai
+
+    User ->> Prog: run_programmer_workflow with user_request, data_file, recursion_limit
+    Prog ->> SB: create Sandbox with timeout 1200
+    Prog ->> Graph: stream input with user_request, data_file, empty data_threads, sandbox_id
+
+    Graph ->> Set: invoke entry node
+    Set ->> ModDF: describe_dataframe with file_object and template describe_dataframe.jinja
+    ModDF -->> Set: data_info
+    Set ->> SB: connect by sandbox_id
+    Set ->> ModSD: set_dataframe(sandbox, file_object, remote_data_path=/home/data.csv)
+    ModSD ->> SB: files.write and run_code to load df
+    SB -->> ModSD: Execution(stdout/stderr)
+    ModSD -->> Set: ok
+    Set -->> Graph: return Command to generate_code with data_info
+
+    Graph ->> GenCode: invoke
+    GenCode ->> ModDF: describe_dataframe with file_object and template generate_code.jinja
+    ModDF -->> GenCode: data_info
+    GenCode ->> ModGC: generate_code with data_info and request (optional previous_thread)
+    ModGC ->> OpenAI: generate_response with Program format
+    OpenAI -->> ModGC: LLMResponse Program
+    ModGC -->> GenCode: Program.code
+    GenCode -->> Graph: append new DataThread and go to execute_code
+
+    Graph ->> Exec: invoke
+    Exec ->> SB: Sandbox.connect(sandbox_id)
+    Exec ->> ModEX: execute_code(sandbox, process_id, thread_id, code)
+    ModEX ->> SB: run_code(code)
+    SB -->> ModEX: execution results
+    ModEX -->> Exec: DataThread with outputs
+    Exec -->> Graph: update last DataThread and go to generate_review
+
+    Graph ->> Review: invoke
+    Review ->> ModGR: generate_review with data_info, user_request, data_thread
+    ModGR ->> OpenAI: generate_response with Review format
+    OpenAI -->> ModGR: LLMResponse Review
+    ModGR -->> Review: review result
+    Review -->> Graph: set observation and completion flag
+
+    alt is_completed is true
+        Graph ->> Close: invoke
+        Close ->> SB: Sandbox.kill(sandbox_id)
+        Close -->> Prog: END
+    else not completed
+        Note over GenCode,Review: previous_thread.observation を user_request に連結して再生成
+        Graph ->> GenCode: invoke (loop)
+    end
