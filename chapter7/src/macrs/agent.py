@@ -1,9 +1,11 @@
 import asyncio
 
-from macrs.configs import Settings
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.pregel import Pregel
+
+from macrs.configs import Settings
+from macrs.custom_logger import setup_logger
 from macrs.models import AgentState, Router
 from macrs.prompts import (
     CHITCHAT_PROMPT,
@@ -11,8 +13,6 @@ from macrs.prompts import (
     QUESTION_PROMPT,
     RECOMMENDATION_PROMPT,
 )
-
-from macrs.custom_logger import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -53,8 +53,7 @@ class QuestionAgent(BaseAgent):
             {"role": "system", "content": prompt},
             {
                 "role": "user",
-                "content": "ユーザーとの過去の会話履歴："
-                + state["conversation_history"],
+                "content": "ユーザーとの過去の会話履歴：" + state["conversation_history"],
             },
         ]
         response = await self.client.ainvoke(messages)
@@ -75,8 +74,7 @@ class RecommendationAgent(BaseAgent):
             {"role": "system", "content": prompt},
             {
                 "role": "user",
-                "content": "ユーザーとの過去の会話履歴："
-                + state["conversation_history"],
+                "content": "ユーザーとの過去の会話履歴：" + state["conversation_history"],
             },
         ]
         response = await self.client.ainvoke(messages)
@@ -97,8 +95,7 @@ class ChitChatAgent(BaseAgent):
             {"role": "system", "content": CHITCHAT_PROMPT},
             {
                 "role": "user",
-                "content": "ユーザーとの過去の会話履歴："
-                + state["conversation_history"],
+                "content": "ユーザーとの過去の会話履歴：" + state["conversation_history"],
             },
         ]
         response = await self.client.ainvoke(messages)
@@ -134,17 +131,19 @@ class PlannerAgent(BaseAgent):
 class MACRS:
     def __init__(self):
         self.settings = Settings()
+        self.openai_api_key = self.settings.OPENAI_API_KEY
         self.model_name = self.settings.OPENAI_MODEL
 
         # Chat OpenAI クライアントのセットアップ
         self.client = ChatOpenAI(
+            api_key=self.openai_api_key,
             model=self.model_name,
             verbose=False,
             max_tokens=1024,
             temperature=0,
         )
         self.client_router = ChatOpenAI(
-            model=self.model_name, temperature=0.7
+            api_key=self.openai_api_key, model=self.model_name, temperature=0.7
         ).with_structured_output(Router)
 
         # 各エージェントのインスタンス化
@@ -204,9 +203,7 @@ class MACRS:
             "exit": False,
             "selected_agent": "",
         }
-        print(
-            "タスク管理エージェントへようこそ！操作を開始してください（終了するには 'exit' と入力してください）。"
-        )
+        print("タスク管理エージェントへようこそ！操作を開始してください（終了するには 'exit' と入力してください）。")
         # 初回実行
         result = await app.ainvoke(state)
         # exitフラグがセットされていれば処理を中断
